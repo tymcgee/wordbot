@@ -16,13 +16,11 @@ const (
 )
 
 func main() {
-	answerIndex := rand.Intn(len(VALID_ANSWERS))
-	answer := VALID_ANSWERS[answerIndex]
-	fmt.Printf("answer is [%s]\n", answer)
-
+	answer := generateAnswer()
 	scanner := bufio.NewScanner(os.Stdin)
-
 	guessNum := 0
+
+	fmt.Println("Guess the word!")
 	for {
 		var guess string
 		var isValid bool
@@ -34,14 +32,26 @@ func main() {
 			}
 		}
 
-		fmt.Printf("guess %v is %v\n", guessNum, guess)
+		colors := getColors([]rune(guess), []rune(answer))
+		fmt.Println(colors)
+
+		if guess == answer {
+			fmt.Println("You win!")
+			break
+		}
 
 		if guessNum == 5 {
-			fmt.Print("YOU LOSE\n")
+			fmt.Printf("The answer was [%s]\n", answer)
 			break
 		}
 		guessNum++
 	}
+}
+
+func generateAnswer() string {
+	answerIndex := rand.Intn(len(VALID_ANSWERS))
+	// fmt.Printf("answer is [%s]\n", answer)
+	return VALID_ANSWERS[answerIndex]
 }
 
 func getColors(guess []rune, answer []rune) string {
