@@ -17,6 +17,7 @@ const (
 func PlayGame(inputScanner *bufio.Scanner) {
 	answer := generateAnswer()
 	guessNum := 0
+	stats := ""
 
 	fmt.Println("Guess the word!")
 	for {
@@ -31,15 +32,18 @@ func PlayGame(inputScanner *bufio.Scanner) {
 		}
 
 		colors := getColors([]rune(guess), []rune(answer))
+		stats += colors + "\n"
 		fmt.Println(colors)
 
 		if guess == answer {
 			fmt.Println("You win!")
+			fmt.Printf("%d/6\n%s", guessNum+1, stats)
 			break
 		}
 
 		if guessNum == 5 {
 			fmt.Printf("The answer was [%s]\n", answer)
+			fmt.Printf("%d/6\n%s", guessNum+1, stats)
 			break
 		}
 		guessNum++
