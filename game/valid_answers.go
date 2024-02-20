@@ -1,4 +1,4 @@
-package main
+package game
 
 // from https://gist.github.com/cfreshman/a7b776506c73284511034e63af1017ee
 // as described in the comments, nyt no longer has a static list of answers,
