@@ -51,9 +51,37 @@ func TestColorsSeven(t *testing.T) {
 	testColors(answer, guess, expected, t)
 }
 
+func TestColorsEight(t *testing.T) {
+	answer := "scene"
+	guess := "peele"
+	expected := GRAY + GRAY + GREEN + GRAY + GREEN
+	testColors(answer, guess, expected, t)
+}
+
+func TestColorsNine(t *testing.T) {
+	answer := "might"
+	guess := "tight"
+	expected := GRAY + GREEN + GREEN + GREEN + GREEN
+	testColors(answer, guess, expected, t)
+}
+
+func TestColorsTen(t *testing.T) {
+	answer := "might"
+	guess := "trite"
+	expected := YELLOW + GRAY + YELLOW + GRAY + GRAY
+	testColors(answer, guess, expected, t)
+}
+
+func TestColorsEleven(t *testing.T) {
+	answer := "tteee"
+	guess := "eexee"
+	expected := YELLOW + GRAY + GRAY + GREEN + GREEN
+	testColors(answer, guess, expected, t)
+}
+
 func testColors(answer string, guess string, expected string, t *testing.T) {
 	actual := getColors([]rune(guess), []rune(answer))
 	if actual != expected {
-		t.Fatalf("Got: [%v]\nExpected: [%v]", actual, expected)
+		t.Fatalf("Guessed [%v] [%v] with answer [%v] [%v]", guess, actual, answer, expected)
 	}
 }
