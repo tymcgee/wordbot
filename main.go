@@ -46,16 +46,18 @@ func main() {
 
 func getColors(guess []rune, answer []rune) string {
 	colors := ""
+	runningAnswer := string(answer)
 	for i := 0; i < len(guess); i++ {
 		guessRune := guess[i]
 		answerRune := answer[i]
 		if guessRune == answerRune {
 			colors += GREEN
+			runningAnswer = strings.Replace(runningAnswer, string(guessRune), "", 1)
 			continue
 		}
-		// TODO: fix the case where there's two of the same character and one is already guessed or yellow
-		if strings.ContainsRune(string(answer), guessRune) {
+		if strings.ContainsRune(runningAnswer, guessRune) {
 			colors += YELLOW
+			runningAnswer = strings.Replace(runningAnswer, string(guessRune), "", 1)
 			continue
 		}
 		colors += GRAY
