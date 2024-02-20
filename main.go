@@ -25,9 +25,9 @@ func main() {
 	guessNum := 0
 	for {
 		var guess string
+		var isValid bool
 		if scanner.Scan() {
 			input := scanner.Text()
-			var isValid bool
 			isValid, guess = validateGuess(input)
 			if !isValid {
 				continue
@@ -42,6 +42,25 @@ func main() {
 		}
 		guessNum++
 	}
+}
+
+func getColors(guess []rune, answer []rune) string {
+	colors := ""
+	for i := 0; i < len(guess); i++ {
+		guessRune := guess[i]
+		answerRune := answer[i]
+		if guessRune == answerRune {
+			colors += GREEN
+			continue
+		}
+		// TODO: fix the case where there's two of the same character and one is already guessed or yellow
+		if strings.ContainsRune(string(answer), guessRune) {
+			colors += YELLOW
+			continue
+		}
+		colors += GRAY
+	}
+	return colors
 }
 
 func validateGuess(input string) (bool, string) {
