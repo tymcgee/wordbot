@@ -15,8 +15,17 @@ const (
 	GRAY   = "⬛"
 )
 
+type Game struct {
+	ShowStats        bool
+	ShowOngoingStats bool
+}
+
 func PlayCli() {
-	PlayGame(getGuessFromCli)
+	g := Game{
+		ShowStats:        true,
+		ShowOngoingStats: true,
+	}
+	g.PlayGame(getGuessFromCli)
 }
 
 func getGuessFromCli() string {
@@ -37,7 +46,7 @@ func getGuessFromCli() string {
 	return guess
 }
 
-func PlayGame(getGuess func() string) {
+func (g *Game) PlayGame(getGuess func() string) {
 	answer := generateAnswer()
 	guessNum := 0
 	stats := ""
@@ -48,17 +57,23 @@ func PlayGame(getGuess func() string) {
 
 		colors := getColors([]rune(guess), []rune(answer))
 		stats += colors + "\n"
-		fmt.Println(colors)
+		if g.ShowOngoingStats {
+			fmt.Println(colors)
+		}
 
 		if guess == answer {
 			fmt.Println("You win!")
-			fmt.Printf("%d/6\n%s", guessNum+1, stats)
+			if g.ShowStats {
+				fmt.Printf("%d/6\n%s", guessNum+1, stats)
+			}
 			break
 		}
 
 		if guessNum == 5 {
 			fmt.Printf("The answer was [%s]\n", answer)
-			fmt.Printf("x/6\n%s", stats)
+			if g.ShowStats {
+				fmt.Printf("x/6\n%s", stats)
+			}
 			break
 		}
 		guessNum++
