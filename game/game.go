@@ -18,16 +18,18 @@ type Game struct {
 	ShowGuesses      bool
 }
 
-func (g *Game) PlayGame(getGuess func() string) {
+func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) {
 	answer := generateAnswer()
 	guessNum := 0
 	stats := ""
+	colors := ""
+	guess := ""
 
 	fmt.Println("Guess the word!")
 	for {
-		guess := getGuess()
+		guess = getGuess(guess, colors)
 
-		colors := getColors([]rune(guess), []rune(answer))
+		colors = getColors([]rune(guess), []rune(answer))
 		stats += colors + "\n"
 
 		if g.ShowGuesses {

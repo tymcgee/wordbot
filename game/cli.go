@@ -17,7 +17,7 @@ func PlayCli() {
 	g.PlayGame(getGuessFromCli)
 }
 
-func getGuessFromCli() string {
+func getGuessFromCli(lastGuess string, lastGuessStats string) string {
 	scanner := bufio.NewScanner(os.Stdin)
 	var guess string
 	var isValid bool
