@@ -9,6 +9,10 @@ type GameInformation struct {
 	Index  int
 }
 
+func FilterNone(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string {
+	return validGuesses
+}
+
 // first try, don't bother with yellows
 func FilterGuessesNoYellows(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string {
 	newValidGuesses := make([]string, 0)

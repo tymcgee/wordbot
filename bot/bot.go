@@ -6,18 +6,6 @@ import (
 	"github.com/tymcgee/wordbot/game"
 )
 
-func RandomGame() {
-	g := game.Game{
-		ShowOngoingStats: true,
-		ShowStats:        false,
-		ShowGuesses:      true,
-	}
-	g.PlayGame(func(lastGuess string, lastGuessStats string) string {
-		idx := rand.Intn(len(game.VALID_GUESSES))
-		return game.VALID_GUESSES[idx]
-	})
-}
-
 func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string) {
 	g := game.Game{
 		ShowOngoingStats: true,
