@@ -36,28 +36,34 @@ func BetterGame() {
 			return game.VALID_GUESSES[idx]
 		}
 
-		for i, letter := range []rune(lastGuessStats) {
-			switch string(letter) {
-			case game.GREEN:
-				green = append(green, GameInformation{
-					Letter: []rune(lastGuess)[i],
-					Index:  i,
-				})
-			case game.YELLOW:
-				yellow = append(yellow, GameInformation{
-					Letter: []rune(lastGuess)[i],
-					Index:  i,
-				})
-			case game.GRAY:
-				gray = append(gray, GameInformation{
-					Letter: []rune(lastGuess)[i],
-					Index:  i,
-				})
-			}
-		}
+		getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)
+
 		validGuesses = FilterGuessesNoYellows(validGuesses, gray, yellow, green)
 
 		idx := rand.Intn(len(validGuesses))
 		return validGuesses[idx]
 	})
+}
+
+func getGameInfo(gray []GameInformation, yellow []GameInformation, green []GameInformation, lastGuess string, lastGuessStats string) {
+	for i, letter := range []rune(lastGuessStats) {
+		switch string(letter) {
+		// TODO: try to stop filling in duplicates?
+		case game.GREEN:
+			green = append(green, GameInformation{
+				Letter: []rune(lastGuess)[i],
+				Index:  i,
+			})
+		case game.YELLOW:
+			yellow = append(yellow, GameInformation{
+				Letter: []rune(lastGuess)[i],
+				Index:  i,
+			})
+		case game.GRAY:
+			gray = append(gray, GameInformation{
+				Letter: []rune(lastGuess)[i],
+				Index:  i,
+			})
+		}
+	}
 }
