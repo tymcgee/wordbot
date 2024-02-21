@@ -15,12 +15,14 @@ func FilterGuessesNoYellows(validGuesses []string, gray []GameInformation, yello
 		for _, info := range gray {
 			if guessRunes[info.Index] == info.Letter {
 				isValid = false
+				break
 			}
 		}
 
 		for _, info := range green {
 			if guessRunes[info.Index] != info.Letter {
 				isValid = false
+				break
 			}
 		}
 		if isValid {
