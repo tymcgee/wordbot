@@ -58,21 +58,33 @@ func generateAnswer() string {
 
 func getColors(guess []rune, answer []rune) string {
 	colors := ""
-	runningAnswer := string(answer)
-	for i := 0; i < len(guess); i++ {
-		guessRune := guess[i]
-		answerRune := answer[i]
-		if guessRune == answerRune {
-			colors += GREEN
-			runningAnswer = strings.Replace(runningAnswer, string(guessRune), "", 1)
-			continue
+	takenYellows := make([]int, 5)
+	for i, guessRune := range guess {
+		color := ""
+		for j, answerRune := range answer {
+
+			if i == j && guessRune == answerRune {
+				color = GREEN
+				break
+			}
+
+			// each letter in the answer can only map to one of either gray, yellow, or green.
+			// if it's green, it can't also map to a yellow.
+			// right now we're either gray or yellow.
+			if guessRune == answerRune && !slices.Contains(takenYellows, j) {
+				// look at our guess at this index to see if it would be green
+				if guess[j] != answerRune {
+					// our guess is not green at this letter, so we can use it for yellow
+					color = YELLOW
+					takenYellows = append(takenYellows, j)
+					break
+				}
+			}
 		}
-		if strings.ContainsRune(runningAnswer, guessRune) {
-			colors += YELLOW
-			runningAnswer = strings.Replace(runningAnswer, string(guessRune), "", 1)
-			continue
+		if color == "" {
+			color = GRAY
 		}
-		colors += GRAY
+		colors += color
 	}
 	return colors
 }
@@ -80,7 +92,7 @@ func getColors(guess []rune, answer []rune) string {
 func validateGuess(input string) (bool, string) {
 	inpSplit := strings.Split(input, " ")
 	if len(inpSplit) > 1 || len(inpSplit) == 0 || len(inpSplit[0]) != 5 {
-		fmt.Println("Guess must be exactly five letters")
+		fmt.Println("Your guess must be exactly five letters")
 		return false, ""
 	}
 	guess := inpSplit[0]
