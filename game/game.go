@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
 	"slices"
 	"strings"
 )
@@ -14,22 +15,36 @@ const (
 	GRAY   = "⬛"
 )
 
-func PlayGame(inputScanner *bufio.Scanner) {
+func PlayCli() {
+	PlayGame(getGuessFromCli)
+}
+
+func getGuessFromCli() string {
+	scanner := bufio.NewScanner(os.Stdin)
+	var guess string
+	var isValid bool
+	for {
+		if scanner.Scan() {
+			input := scanner.Text()
+			isValid, guess = validateGuess(input)
+			if !isValid {
+				continue
+			}
+			// valid guess
+			break
+		}
+	}
+	return guess
+}
+
+func PlayGame(getGuess func() string) {
 	answer := generateAnswer()
 	guessNum := 0
 	stats := ""
 
 	fmt.Println("Guess the word!")
 	for {
-		var guess string
-		var isValid bool
-		if inputScanner.Scan() {
-			input := inputScanner.Text()
-			isValid, guess = validateGuess(input)
-			if !isValid {
-				continue
-			}
-		}
+		guess := getGuess()
 
 		colors := getColors([]rune(guess), []rune(answer))
 		stats += colors + "\n"
