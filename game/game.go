@@ -16,6 +16,7 @@ type Game struct {
 	ShowStats        bool
 	ShowOngoingStats bool
 	ShowGuesses      bool
+	ShowIntro        bool
 }
 
 func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) {
@@ -25,7 +26,9 @@ func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) s
 	colors := ""
 	guess := ""
 
-	fmt.Println("Guess the word!")
+	if g.ShowIntro {
+		fmt.Println("Guess the word!")
+	}
 	for {
 		guess = getGuess(guess, colors)
 

@@ -11,6 +11,7 @@ func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, ye
 		ShowOngoingStats: true,
 		ShowStats:        false,
 		ShowGuesses:      true,
+		ShowIntro:        false,
 	}
 	gray := make([]GameInformation, 0)
 	yellow := make([]GameInformation, 0)
