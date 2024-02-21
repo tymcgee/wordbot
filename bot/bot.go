@@ -36,7 +36,7 @@ func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, ye
 			return game.VALID_GUESSES[idx]
 		}
 
-		getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)
+		gray, yellow, green = getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)
 
 		validGuesses = filterMethod(validGuesses, gray, yellow, green)
 
@@ -45,7 +45,8 @@ func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, ye
 	})
 }
 
-func getGameInfo(gray []GameInformation, yellow []GameInformation, green []GameInformation, lastGuess string, lastGuessStats string) {
+// append creates a new copy in the function which is why we have to return them back out
+func getGameInfo(gray []GameInformation, yellow []GameInformation, green []GameInformation, lastGuess string, lastGuessStats string) ([]GameInformation, []GameInformation, []GameInformation) {
 	for i, letter := range []rune(lastGuessStats) {
 		switch string(letter) {
 		// TODO: try to stop filling in duplicates?
@@ -66,4 +67,5 @@ func getGameInfo(gray []GameInformation, yellow []GameInformation, green []GameI
 			})
 		}
 	}
+	return gray, yellow, green
 }
