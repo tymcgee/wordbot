@@ -1,9 +1,8 @@
 package main
 
-import (
-	"github.com/tymcgee/wordbot/game"
-)
+import "github.com/tymcgee/wordbot/bot"
 
 func main() {
-	game.PlayCli()
+	// game.PlayCli()
+	bot.BetterGame()
 }
