@@ -15,6 +15,7 @@ const (
 type Game struct {
 	ShowStats        bool
 	ShowOngoingStats bool
+	ShowGuesses      bool
 }
 
 func (g *Game) PlayGame(getGuess func() string) {
@@ -28,6 +29,11 @@ func (g *Game) PlayGame(getGuess func() string) {
 
 		colors := getColors([]rune(guess), []rune(answer))
 		stats += colors + "\n"
+
+		if g.ShowGuesses {
+			fmt.Printf("%s  ", guess)
+		}
+
 		if g.ShowOngoingStats {
 			fmt.Println(colors)
 		}
