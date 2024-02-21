@@ -18,7 +18,7 @@ func RandomGame() {
 	})
 }
 
-func BetterGame() {
+func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string) {
 	g := game.Game{
 		ShowOngoingStats: true,
 		ShowStats:        false,
@@ -38,7 +38,7 @@ func BetterGame() {
 
 		getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)
 
-		validGuesses = FilterGuessesNoYellows(validGuesses, gray, yellow, green)
+		validGuesses = filterMethod(validGuesses, gray, yellow, green)
 
 		idx := rand.Intn(len(validGuesses))
 		return validGuesses[idx]
