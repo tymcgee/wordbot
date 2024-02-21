@@ -43,7 +43,7 @@ func PlayGame(inputScanner *bufio.Scanner) {
 
 		if guessNum == 5 {
 			fmt.Printf("The answer was [%s]\n", answer)
-			fmt.Printf("%d/6\n%s", guessNum+1, stats)
+			fmt.Printf("x/6\n%s", stats)
 			break
 		}
 		guessNum++
