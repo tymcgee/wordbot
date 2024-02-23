@@ -1,6 +1,7 @@
 package game
 
 // from https://gist.github.com/dracos/dd0668f281e685bad51479e5acaadb93
+// removed a few (~10) swears and other words
 var VALID_GUESSES = [...]string{
 	"aahed",
 	"aalii",
