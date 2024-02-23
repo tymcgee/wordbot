@@ -14,6 +14,8 @@ func PlayCli() {
 		ShowOngoingStats: true,
 		ShowGuesses:      false,
 		ShowIntro:        true,
+		ShowWinText:      true,
+		ShowAnswerOnLoss: true,
 	}
 	g.PlayGame(getGuessFromCli)
 }

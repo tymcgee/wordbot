@@ -14,6 +14,8 @@ func BotGame(
 		ShowStats:        false,
 		ShowGuesses:      false,
 		ShowIntro:        false,
+		ShowWinText:      false,
+		ShowAnswerOnLoss: false,
 	}
 	gray := make([]GameInformation, 0)
 	green := make([]GameInformation, 0)

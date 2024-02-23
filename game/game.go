@@ -17,6 +17,8 @@ type Game struct {
 	ShowOngoingStats bool
 	ShowGuesses      bool
 	ShowIntro        bool
+	ShowAnswerOnLoss bool
+	ShowWinText      bool
 }
 
 type Results struct {
@@ -48,7 +50,9 @@ func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string,
 		}
 
 		if guess == answer {
-			fmt.Println("You win!")
+			if g.ShowWinText {
+				fmt.Println("You win!")
+			}
 			if g.ShowStats {
 				fmt.Printf("%d/6\n%s", guessNum+1, stats)
 			}
@@ -59,7 +63,9 @@ func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string,
 		}
 
 		if guessNum == 5 {
-			fmt.Printf("The answer was [%s]\n", answer)
+			if g.ShowAnswerOnLoss {
+				fmt.Printf("The answer was [%s]\n", answer)
+			}
 			if g.ShowStats {
 				fmt.Printf("x/6\n%s", stats)
 			}
