@@ -70,16 +70,15 @@ func generateAnswer() string {
 
 func getColors(guess []rune, answer []rune) string {
 	colors := ""
-	takenYellows := make([]int, 5)
+	takenYellows := make([]int, 0)
 	for i, guessRune := range guess {
 		color := ""
+		// early exit if it's green
+		if answer[i] == guessRune {
+			colors += GREEN
+			continue
+		}
 		for j, answerRune := range answer {
-
-			if i == j && guessRune == answerRune {
-				color = GREEN
-				break
-			}
-
 			// each letter in the answer can only map to one of either gray, yellow, or green.
 			// if it's green, it can't also map to a yellow.
 			// right now we're either gray or yellow.

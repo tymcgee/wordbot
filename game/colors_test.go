@@ -79,6 +79,13 @@ func TestColorsEleven(t *testing.T) {
 	testColors(answer, guess, expected, t)
 }
 
+func TestColorsTwelve(t *testing.T) {
+	answer := "shook"
+	guess := "cagot"
+	expected := GRAY + GRAY + GRAY + GREEN + GRAY
+	testColors(answer, guess, expected, t)
+}
+
 func testColors(answer string, guess string, expected string, t *testing.T) {
 	actual := getColors([]rune(guess), []rune(answer))
 	if actual != expected {
