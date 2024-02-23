@@ -19,8 +19,7 @@ type Game struct {
 	ShowIntro        bool
 }
 
-func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) {
-	answer := generateAnswer()
+func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string, lastGuessStats string) string) bool {
 	guessNum := 0
 	stats := ""
 	colors := ""
@@ -48,7 +47,7 @@ func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) s
 			if g.ShowStats {
 				fmt.Printf("%d/6\n%s", guessNum+1, stats)
 			}
-			break
+			return true
 		}
 
 		if guessNum == 5 {
@@ -56,10 +55,15 @@ func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) s
 			if g.ShowStats {
 				fmt.Printf("x/6\n%s", stats)
 			}
-			break
+			return false
 		}
 		guessNum++
 	}
+}
+
+func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) bool {
+	answer := generateAnswer()
+	return g.PlayGameWithAnswer(answer, getGuess)
 }
 
 func generateAnswer() string {

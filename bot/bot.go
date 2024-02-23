@@ -6,19 +6,25 @@ import (
 	"github.com/tymcgee/wordbot/game"
 )
 
-func BotGame(filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string) {
+func BotGame(
+	filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string,
+) bool {
 	g := game.Game{
-		ShowOngoingStats: true,
+		ShowOngoingStats: false,
 		ShowStats:        false,
-		ShowGuesses:      true,
+		ShowGuesses:      false,
 		ShowIntro:        false,
 	}
 	gray := make([]GameInformation, 0)
-	yellow := make([]GameInformation, 0)
 	green := make([]GameInformation, 0)
 	validGuesses := game.VALID_GUESSES[:]
 
-	g.PlayGame(func(lastGuess string, lastGuessStats string) string {
+	return g.PlayGame(func(lastGuess string, lastGuessStats string) string {
+		// remaking the yellow list on every loop will be nicer.
+		// current logic forces the guess to contain all yellows from
+		// previous answer, so either they're all still yellow
+		// or some of them turned green.
+		yellow := make([]GameInformation, 0)
 		if lastGuessStats == "" {
 			// this is the first round, we don't have stats yet
 			idx := rand.Intn(len(game.VALID_GUESSES))
