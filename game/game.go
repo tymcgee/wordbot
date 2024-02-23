@@ -19,7 +19,12 @@ type Game struct {
 	ShowIntro        bool
 }
 
-func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string, lastGuessStats string) string) bool {
+type Results struct {
+	Won     bool
+	Guesses int
+}
+
+func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string, lastGuessStats string) string) Results {
 	guessNum := 0
 	stats := ""
 	colors := ""
@@ -47,7 +52,10 @@ func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string,
 			if g.ShowStats {
 				fmt.Printf("%d/6\n%s", guessNum+1, stats)
 			}
-			return true
+			return Results{
+				Won:     true,
+				Guesses: guessNum,
+			}
 		}
 
 		if guessNum == 5 {
@@ -55,20 +63,23 @@ func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string,
 			if g.ShowStats {
 				fmt.Printf("x/6\n%s", stats)
 			}
-			return false
+			return Results{
+				Won:     false,
+				Guesses: guessNum,
+			}
 		}
 		guessNum++
 	}
 }
 
-func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) bool {
+func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) string) Results {
 	answer := generateAnswer()
 	return g.PlayGameWithAnswer(answer, getGuess)
 }
 
 func generateAnswer() string {
 	answerIndex := rand.Intn(len(VALID_ANSWERS))
-	// fmt.Printf("answer is [%s]\n", answer)
+	// fmt.Printf("answer is [%v]\n", VALID_ANSWERS[answerIndex])
 	return VALID_ANSWERS[answerIndex]
 }
 

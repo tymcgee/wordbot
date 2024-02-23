@@ -8,7 +8,7 @@ import (
 
 func BotGame(
 	filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string,
-) bool {
+) game.Results {
 	g := game.Game{
 		ShowOngoingStats: false,
 		ShowStats:        false,
