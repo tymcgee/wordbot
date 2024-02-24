@@ -34,6 +34,10 @@ func (g *Game) PlayGameWithAnswer(answer string, getGuess GuessDecider) Results 
 	colors := ""
 	guess := ""
 
+	if answer == "" {
+		answer = generateAnswer()
+	}
+
 	if g.ShowIntro {
 		fmt.Println("Guess the word!")
 	}

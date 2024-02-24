@@ -8,7 +8,8 @@ import (
 
 type FilterMethod = func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string
 
-func BotGame(filter FilterMethod) game.Results {
+// answer may be empty, in which case a real answer will be generated
+func BotGame(answer string, filter FilterMethod) game.Results {
 	g := game.Game{
 		ShowOngoingStats: false,
 		ShowStats:        false,
@@ -21,7 +22,7 @@ func BotGame(filter FilterMethod) game.Results {
 	green := make([]GameInformation, 0)
 	validGuesses := game.VALID_GUESSES[:]
 
-	return g.PlayGame(func(lastGuess string, lastGuessStats string) string {
+	return g.PlayGameWithAnswer(answer, func(lastGuess string, lastGuessStats string) string {
 		// remaking the yellow list on every loop will be nicer.
 		// current logic forces the guess to contain all yellows from
 		// previous answer, so either they're all still yellow

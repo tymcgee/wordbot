@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-func PlayCli() {
+// answer may be empty, in which case a real answer will be generated
+func PlayCli(answer string) {
 	g := Game{
 		ShowStats:        true,
 		ShowOngoingStats: true,
@@ -17,7 +18,7 @@ func PlayCli() {
 		ShowWinText:      true,
 		ShowAnswerOnLoss: true,
 	}
-	g.PlayGame(getGuessFromCli)
+	g.PlayGameWithAnswer(answer, getGuessFromCli)
 }
 
 func getGuessFromCli(lastGuess string, lastGuessStats string) string {

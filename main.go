@@ -14,7 +14,7 @@ func main() {
 	totalGames := 1000
 	for i := range totalGames {
 		fmt.Printf("\rPlaying game %d", i+1)
-		results := bot.BotGame(bot.FilterGuesses)
+		results := bot.BotGame(answer, bot.FilterGuesses)
 		numGuesses += results.Guesses
 		if results.Won {
 			numGuessesOnWinningGames += results.Guesses
