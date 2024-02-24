@@ -6,9 +6,9 @@ import (
 	"github.com/tymcgee/wordbot/game"
 )
 
-func BotGame(
-	filterMethod func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string,
-) game.Results {
+type FilterMethod = func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string
+
+func BotGame(filter FilterMethod) game.Results {
 	g := game.Game{
 		ShowOngoingStats: false,
 		ShowStats:        false,
@@ -35,7 +35,7 @@ func BotGame(
 
 		gray, yellow, green = getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)
 
-		validGuesses = filterMethod(validGuesses, gray, yellow, green)
+		validGuesses = filter(validGuesses, gray, yellow, green)
 
 		idx := rand.Intn(len(validGuesses))
 		return validGuesses[idx]
@@ -46,7 +46,7 @@ func BotGame(
 func getGameInfo(gray []GameInformation, yellow []GameInformation, green []GameInformation, lastGuess string, lastGuessStats string) ([]GameInformation, []GameInformation, []GameInformation) {
 	for i, letter := range []rune(lastGuessStats) {
 		switch string(letter) {
-		// TODO: try to stop filling in duplicates?
+		// note: this will make duplicates, but it shouldn't matter in the filter function
 		case game.GREEN:
 			green = append(green, GameInformation{
 				Letter: []rune(lastGuess)[i],

@@ -12,6 +12,8 @@ const (
 	GRAY   = "⬛"
 )
 
+type GuessDecider = func(lastGuess string, lastGuessStats string) string
+
 type Game struct {
 	ShowStats        bool
 	ShowOngoingStats bool
@@ -26,7 +28,7 @@ type Results struct {
 	Guesses int
 }
 
-func (g *Game) PlayGameWithAnswer(answer string, getGuess func(lastGuess string, lastGuessStats string) string) Results {
+func (g *Game) PlayGameWithAnswer(answer string, getGuess GuessDecider) Results {
 	guessNum := 0
 	stats := ""
 	colors := ""
@@ -85,12 +87,12 @@ func (g *Game) PlayGame(getGuess func(lastGuess string, lastGuessStats string) s
 
 func generateAnswer() string {
 	answerIndex := rand.Intn(len(VALID_ANSWERS))
-	// fmt.Printf("answer is [%v]\n", VALID_ANSWERS[answerIndex])
 	return VALID_ANSWERS[answerIndex]
 }
 
 func getColors(guess []rune, answer []rune) string {
 	colors := ""
+	// list of indices where we've already used it for a yellow
 	takenYellows := make([]int, 0)
 	for i, guessRune := range guess {
 		color := ""
