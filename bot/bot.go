@@ -9,7 +9,8 @@ import (
 type FilterMethod = func(validGuesses []string, gray []GameInformation, yellow []GameInformation, green []GameInformation) []string
 
 // answer may be empty, in which case a real answer will be generated
-func BotGame(answer string, filter FilterMethod) game.Results {
+// firstGuess may be empty, in which case the first guess will be random
+func BotGame(answer string, firstGuess string, filter FilterMethod) game.Results {
 	g := game.Game{
 		ShowOngoingStats: false,
 		ShowStats:        false,
@@ -30,8 +31,11 @@ func BotGame(answer string, filter FilterMethod) game.Results {
 		yellow := make([]GameInformation, 0)
 		if lastGuessStats == "" {
 			// this is the first round, we don't have stats yet
-			idx := rand.Intn(len(game.VALID_GUESSES))
-			return game.VALID_GUESSES[idx]
+			if firstGuess == "" {
+				idx := rand.Intn(len(game.VALID_GUESSES))
+				return game.VALID_GUESSES[idx]
+			}
+			return firstGuess
 		}
 
 		gray, yellow, green = getGameInfo(gray, yellow, green, lastGuess, lastGuessStats)

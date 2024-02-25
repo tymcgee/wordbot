@@ -12,9 +12,11 @@ func main() {
 	var isBot bool
 	var answer string
 	var numOfGames int
+	var firstGuess string
 	flag.BoolVar(&isBot, "bot", false, "whether to use the bot")
 	flag.StringVar(&answer, "a", "", "predefined answer")
 	flag.IntVar(&numOfGames, "n", 1, "number of games to play (only works in conjunction with --bot)")
+	flag.StringVar(&firstGuess, "first", "", "first guess to use (only works in conjunction with --bot) (default first guess is random)")
 	flag.Parse()
 
 	if !isBot {
@@ -27,7 +29,7 @@ func main() {
 	wins := 0
 	for i := range numOfGames {
 		fmt.Printf("\rPlaying game %d", i+1)
-		results := bot.BotGame(answer, bot.FilterGuesses)
+		results := bot.BotGame(answer, firstGuess, bot.FilterGuesses)
 		numGuesses += results.Guesses
 		if results.Won {
 			numGuessesOnWinningGames += results.Guesses
