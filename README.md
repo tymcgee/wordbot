@@ -1,7 +1,7 @@
 # Installation
 If you want to install the binary for whatever reason, you can run
 ```
-go install github.com/tymcgee/wordbot
+go install github.com/tymcgee/wordbot@v1.0.0
 ```
 
 # Usage
