@@ -52,7 +52,11 @@ func main() {
 
 // Exits if the word is not five alpha characters or empty.
 func validateWord(word string) {
-	if (len(word) != 0 && len(word) != 5) || !IsAlpha(word) {
+	if word == "" {
+		return
+	}
+
+	if (len(word) != 5) || !IsAlpha(word) {
 		fmt.Printf("\"%v\" is an invalid word\n", word)
 		os.Exit(1)
 	}
